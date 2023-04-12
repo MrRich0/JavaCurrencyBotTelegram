@@ -27,17 +27,17 @@ public class StartCommand extends BotCommand {
                 .builder()
                 .text("Отримати інформацію")
                 .callbackData("Отримати інформацію")
-                .build();  // створили кнопку1 під текстом
+                .build();
         InlineKeyboardButton buttonSettings = InlineKeyboardButton
                 .builder()
                 .text("Налаштування")
                 .callbackData("Налаштування")
-                .build(); //створили кнопку2 під текстом
+                .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
                 .builder()
                 .keyboard(Collections.singleton(Collections.singletonList(buttonInfo)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonSettings)))
-                .build(); // створили клавіатуру з кнопками
+                .build();
 
         message.setReplyMarkup(keyboard);
         try {
