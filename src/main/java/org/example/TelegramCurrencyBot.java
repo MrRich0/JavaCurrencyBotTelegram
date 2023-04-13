@@ -19,7 +19,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
 
     @Override
     public String getBotToken(){
-        return null;
+        return BotConstants.BOT_TOKEN;
     }
 
     @Override
