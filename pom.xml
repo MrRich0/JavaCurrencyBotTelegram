@@ -27,6 +27,12 @@
             <artifactId>telegrambots</artifactId>
             <version>6.5.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.telegram/telegrambotsextensions -->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambotsextensions</artifactId>
+            <version>6.5.0</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
