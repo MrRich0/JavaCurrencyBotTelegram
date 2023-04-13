@@ -16,7 +16,7 @@ public class TestBot {
     static Scanner scanner = new Scanner(System.in);
    public static int bankChoice=1;
    public static int parseChose=2;
-   public static RateResponceDto a=apiNBY.getRates(parseChose).get(0);
+   public static RateResponceDto a=apiNBY.getRates(parseChose).get(0);// інформація валюти
     public static void main(String[] args) throws IOException {
        boolean mainMenuExit=true;
 
@@ -119,10 +119,10 @@ while (bankExit==true){
     }
     public static void USD_Button(){
         switch (bankChoice){
-            case 1: apiNBY.getRates(parseChose).get(0);
+            case 1: a=apiNBY.getRates(parseChose).get(0);
                 break;
             case 2:
-                apiMONO.getRates(parseChose).get(0);
+               a= apiMONO.getRates(parseChose).get(0);
                 break;
             case 3:
                 a=apiPRIVAT.getRates(parseChose).get(1);
