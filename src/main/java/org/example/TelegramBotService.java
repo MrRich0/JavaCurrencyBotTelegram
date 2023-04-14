@@ -11,7 +11,7 @@ public class TelegramBotService {
         telegramCurrencyBot = new TelegramCurrencyBot();
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(telegramCurrencyBot); // зареєстрували бота
+            telegramBotsApi.registerBot(telegramCurrencyBot);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
