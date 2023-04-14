@@ -1,23 +1,21 @@
 package org.example;
 
-import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
-import org.example.command.StartCommand;
+import org.example.command.Buttons;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.Collections;
+public class TelegramCurrencyBot extends TelegramLongPollingBot {
 
-public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
-
-    public TelegramCurrencyBot(){
-        register(new StartCommand());
+    public TelegramCurrencyBot(DefaultBotOptions options) {
+        super(options);
     }
 
     @Override
-    public String getBotToken(){
+    public String getBotToken() {
         return BotConstants.BOT_TOKEN;
     }
 
@@ -26,62 +24,48 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
         return BotConstants.BOT_NAME;
     }
 
-    @Override
-    public void processNonCommandUpdate(Update update) {
+    public void commandStart(Update update) throws TelegramApiException {
+        Long chatId1 = update.getMessage().getChatId();
+        String text = update.getMessage().getText();
+        if (text.equals("/start")) {
 
-        if(update.hasCallbackQuery()) {
-            String data = update.getCallbackQuery().getData();
-            if (data.equals("Отримати інформацію")) {
-                SendMessage messageInfo = new SendMessage();
-                messageInfo.setText("Currency rate");
-                Long chatId = update.getCallbackQuery().getMessage().getChatId();
-                messageInfo.setChatId(chatId);
-                try {
-                    execute(messageInfo);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
-                }
-
-            } if (data.equals("Налаштування")) {
-                    SendMessage message = new SendMessage();
-                    message.setText("Налаштування");
-                    Long chatId = update.getCallbackQuery().getMessage().getChatId();
-                    message.setChatId(chatId);
-
-                InlineKeyboardButton buttonNumberOfDecimalPlaces = InlineKeyboardButton
-                            .builder()
-                            .text("Обрати кількість знаків після коми")
-                            .callbackData("Обрати кількість знаків після коми")
-                            .build();
-                    InlineKeyboardButton buttonBank = InlineKeyboardButton
-                            .builder()
-                            .text("Обрати банк")
-                            .callbackData("Обрати банк")
-                            .build();
-                    InlineKeyboardButton buttonCurrency = InlineKeyboardButton
-                            .builder()
-                            .text("Обрати валюту")
-                            .callbackData("Обрати валюту")
-                            .build();
-                    InlineKeyboardButton buttonTime = InlineKeyboardButton
-                            .builder()
-                            .text("Обрати час сповіщень")
-                            .callbackData("Обрати час сповіщень")
-                            .build();
-                    InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
-                            .builder()
-                            .keyboard(Collections.singleton(Collections.singletonList(buttonNumberOfDecimalPlaces)))
-                            .keyboard(Collections.singleton(Collections.singletonList(buttonBank)))
-                            .keyboard(Collections.singleton(Collections.singletonList(buttonCurrency)))
-                            .keyboard(Collections.singleton(Collections.singletonList(buttonTime)))
-                            .build();
-                    message.setReplyMarkup(keyboard);
-                    try {
-                        execute(message);
-                    } catch (TelegramApiException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setText("Вітаємо вас! Цей бот допоможе відслідкувати актуальні курси валют");
+            sendMessage.setChatId(chatId1);
+            sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
+            execute(sendMessage);
         }
     }
+
+    public void commandSettings(CallbackQuery callbackQuery) throws TelegramApiException {
+        Long chatId1 = callbackQuery.getMessage().getChatId();
+        String callbackQueryData = callbackQuery.getData();
+        if (callbackQueryData.equals("Налаштування")) {
+
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setText("Налаштування");
+            sendMessage.setChatId(chatId1);
+            sendMessage.setReplyMarkup(Buttons.getButtonsOfSettings());
+            execute(sendMessage);
+        }
+    }
+
+    @Override
+    public void onUpdateReceived(Update update) {
+
+        if (update.hasMessage() && update.getMessage().isCommand()) {
+            try {
+                commandStart(update);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        } else if (update.hasCallbackQuery()) {
+            try {
+                commandSettings(update.getCallbackQuery());
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+}
