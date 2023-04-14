@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.command.Settings;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.example.command.StartCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,13 +7,13 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 import java.util.Collections;
 
 public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
 
     public TelegramCurrencyBot(){
         register(new StartCommand());
-        register(new Settings());
     }
 
     @Override
@@ -49,7 +48,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
                     Long chatId = update.getCallbackQuery().getMessage().getChatId();
                     message.setChatId(chatId);
 
-                    InlineKeyboardButton buttonNumberOfDecimalPlaces = InlineKeyboardButton
+                InlineKeyboardButton buttonNumberOfDecimalPlaces = InlineKeyboardButton
                             .builder()
                             .text("Обрати кількість знаків після коми")
                             .callbackData("Обрати кількість знаків після коми")
