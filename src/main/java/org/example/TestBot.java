@@ -12,33 +12,42 @@ public class TestBot {
   static   CurrencyRateApiService apiNBY = new NBYCurrencyRateService();
   static   CurrencyRateApiService apiMONO = new MONOCurrencyRateService();
   static   CurrencyRateApiService apiPRIVAT = new PrivatCurrencyRateService();
+static Message notification = new Message();
 
     static Scanner scanner = new Scanner(System.in);
    public static int bankChoice=1;
    public static int parseChose=2;
-   public static RateResponceDto a=apiNBY.getRates(parseChose).get(0);// інформація валюти
+   public static String tmp="USD";
+   // інформація валюти
     public static void main(String[] args) throws IOException {
-       boolean mainMenuExit=true;
 
-      while (mainMenuExit==true){
-          System.out.println("головне меню");
-          System.out.println("1 - вивід іформації\n"+
-                  "2 - Налаштування\n"+
-                  "3 - вихід\n"+
-                  ">");
-switch (scanner.nextLine()){
-    case "1":
-        System.out.println(a);
-        break;
-    case "2":
-        settingsMenuButton();
-break;
-    case "3":mainMenuExit=false;
-    break;
-        }}}
+
+        boolean mainMenuExit=true;
+
+        while (mainMenuExit==true){
+            RateResponceDto a=Curracy(tmp);
+            System.out.println("головне меню");
+            System.out.println("1 - вивід іформації\n"+
+                    "2 - Налаштування\n"+
+                    "3 - вихід\n"+
+                    ">");
+            switch (scanner.nextLine()){
+                case "1":
+                    System.out.println(a);
+                    break;
+                case "2":
+                    settingsMenuButton();
+                    break;
+                case "3":mainMenuExit=false;
+                    break;
+            }}
+
+    }
+
+
 
     public static void settingsMenuButton(){
-        String tmp;
+
 boolean exit=true;
 
         while (exit==true){
@@ -46,7 +55,7 @@ boolean exit=true;
             System.out.println("1 - Банк\n"+
                     "2 - Валюта\n"+
                     "3 - знаків після коми\n"+
-                    "4 - вихід\n"+
+                    "4- вихід\n"+
                     ">");
         switch (scanner.nextLine()){
         case "1":
@@ -64,16 +73,8 @@ boolean exit=true;
             System.out.println("Яка валюта вас цікавить?");
             System.out.println("Вибір:USD/EUR\n" +
                     ">");
-            switch (tmp = scanner.nextLine().toUpperCase()) {
-                case "USD":
-                    USD_Button();
-                  break;
-                case "EUR":
-                    EUR_Button();
-                    break;
-                default:
-                    System.out.println("На жаль валюти " + tmp +" немає!Спробуйте ще раз.");
-            }break;
+            tmp=scanner.nextLine().toUpperCase();
+           break;
             case "3":
                 System.out.println("1 - 2 коми\n" +
                         "2 - 3 коми\n" +
@@ -82,6 +83,11 @@ boolean exit=true;
                         ">");
 parseMenuButton();
 break;
+
+
+
+
+
             case"4":exit=false;
         }
         }
@@ -100,34 +106,49 @@ while (bankExit==true){
                     bankChoice=3;
                     break;
                 case "0":bankExit=false;
+                break;
             }
     }
     }
-    public static void EUR_Button(){
-        switch (bankChoice){
-            case 1:
-             a=apiNBY.getRates(parseChose).get(1);
-                break;
+    public static RateResponceDto Curracy(String tmp){
+       RateResponceDto f = null;
+        switch (tmp ) {
+            case "USD":
+                switch (bankChoice){
+                    case 1:
+                        f=apiNBY.getRates(parseChose).get(0);
+                        break;
 
-            case 2:
-               a= apiMONO.getRates(parseChose).get(1);
-               break;
-            case 3:
-              a=  apiPRIVAT.getRates(parseChose).get(1);
+                    case 2:
+                        f= apiMONO.getRates(parseChose).get(0);
+                        break;
+                    case 3:
+                        f=  apiPRIVAT.getRates(parseChose).get(1);
+                        break;
+                }
                 break;
+            case "EUR":
+                switch (bankChoice){
+                    case 1: f=apiNBY.getRates(parseChose).get(1);
+                        break;
+                    case 2:
+                        f= apiMONO.getRates(parseChose).get(1);
+                        break;
+                    case 3:
+                        f=apiPRIVAT.getRates(parseChose).get(1);
+                        break;
+                }
+                break;
+            default:
+                System.out.println("На жаль валюти " + tmp +" немає!Спробуйте ще раз.");
         }
+        return f;
+    }
+    public static void EUR_Button(){
+
     }
     public static void USD_Button(){
-        switch (bankChoice){
-            case 1: a=apiNBY.getRates(parseChose).get(0);
-                break;
-            case 2:
-               a= apiMONO.getRates(parseChose).get(0);
-                break;
-            case 3:
-                a=apiPRIVAT.getRates(parseChose).get(1);
-                break;
-        }
+
     }
     public static void parseMenuButton(){
         boolean parseExit=true;
@@ -144,5 +165,6 @@ while (bankExit==true){
             }
         }
     }
+
 }
 
