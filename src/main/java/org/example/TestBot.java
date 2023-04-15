@@ -16,7 +16,7 @@ public class TestBot {
     static Scanner scanner = new Scanner(System.in);
    public static int bankChoice=1;
    public static int parseChose=2;
-   public static RateResponceDto a=apiNBY.getRates(parseChose).get(0);// інформація валюти
+   public static RateResponceDto a = apiNBY.getRates(parseChose).get(0);// інформація валюти
     public static void main(String[] args) throws IOException {
        boolean mainMenuExit=true;
 
