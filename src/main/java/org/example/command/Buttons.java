@@ -1,10 +1,17 @@
 package org.example.command;
 
-import org.example.bank.Bank;
+import org.example.BotLogic;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Buttons {
 
@@ -59,21 +66,36 @@ public class Buttons {
         return keyboard;
 
     }
- public   static InlineKeyboardMarkup getButtonsOfParse(){
+     public static class NumberSimbolsAfterCommaSetting  {
+    static BotLogic botLogic=new BotLogic();
+
+    static String setButton2Name() {
+        return  (String.valueOf(botLogic.parseChose).equals("2")) ? "2" + " ✅" : "2" ;
+    }
+
+  static   String setButton3Name() {
+        return  (String.valueOf(botLogic.parseChose).equals("3")) ? "3" + " ✅" : "3" ;
+    }
+
+  static   String setButton4Name() {
+        return  (String.valueOf(botLogic.parseChose).equals("4")) ? "4" + " ✅" : "4" ;
+    }
+ public  static   InlineKeyboardMarkup getButtonsOfParse(Long chatId){
+
 
      InlineKeyboardButton button2 = InlineKeyboardButton
              .builder()
-             .text("2")
+             .text(setButton2Name())
              .callbackData("2")
              .build();
      InlineKeyboardButton button3 = InlineKeyboardButton
              .builder()
-             .text("3")
+             .text(setButton3Name())
              .callbackData("3")
              .build();
      InlineKeyboardButton button4 = InlineKeyboardButton
              .builder()
-             .text("4")
+             .text(setButton4Name())
              .callbackData("4")
              .build();
      InlineKeyboardButton buttonBack = InlineKeyboardButton
@@ -91,6 +113,10 @@ public class Buttons {
 
      return keyboard;
  }
+
+
+
+     }
     public static InlineKeyboardMarkup getButtonsBank(){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.command.NotificationSetting;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -16,6 +17,7 @@ public class TelegramBotService {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+        new Thread(new Notification(NotificationSetting.getNotificationMap(), telegramCurrencyBot)).start();
     }
 
 }
