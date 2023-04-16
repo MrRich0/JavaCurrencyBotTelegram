@@ -1,7 +1,5 @@
 package org.example;
 
-import lombok.SneakyThrows;
-import org.example.bank.Bank;
 import org.example.command.Buttons;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -11,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class TelegramCurrencyBot extends TelegramLongPollingBot {
-    TestBot testBot=new TestBot();
+    BotLogic botLogic =new BotLogic();
     public TelegramCurrencyBot(DefaultBotOptions options) {
         super(options);
     }
@@ -53,7 +51,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         if (callbackQueryData.equals("Отримати інформацію")) {
 
             SendMessage sendMessage = new SendMessage();
-            sendMessage.setText(testBot.getA());
+            sendMessage.setText(botLogic.getFinalMessage());
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
             execute(sendMessage);
@@ -71,7 +69,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         if (Character.isDigit(callbackQueryData.charAt(0))){
 
             SendMessage sendMessage=new SendMessage();
-            sendMessage.setText("ви обрали "+testBot.parseMenuButton(callbackQueryData));
+            sendMessage.setText("ви обрали "+ botLogic.parseMenuButton(callbackQueryData));
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
             execute(sendMessage);
@@ -89,7 +87,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
            case "Монобанк":
            case "НБУ":
                SendMessage sendMessage = new SendMessage();
-               sendMessage.setText("ви вибрали "+testBot.bankMenuButton(callbackQueryData));
+               sendMessage.setText("ви вибрали "+ botLogic.bankMenuButton(callbackQueryData));
                sendMessage.setChatId(chatId1);
                sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
                execute(sendMessage);
@@ -105,53 +103,25 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         switch (callbackQueryData){
             case "USD":
             case "EUR":
-                testBot.Curracy(callbackQueryData);
+                botLogic.Curracy(callbackQueryData);
 
                 SendMessage sendMessage=new SendMessage();
-                sendMessage.setText("ви вибрали"+testBot.getTmp());
+                sendMessage.setText("ви вибрали"+ botLogic.getChosenCurrency());
 sendMessage.setChatId(chatId1);
 sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
 execute(sendMessage);
         }
-    }
-
-    public void commandInfo(CallbackQuery callbackQuery) throws  TelegramApiException{
-        Long chatId1 = callbackQuery.getMessage().getChatId();
-
-        String callbackQueryData = callbackQuery.getData();
-        if (callbackQueryData.equals("Отримати інформацію")) {
-
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.setText(testBot.getA());
+        if (callbackQueryData.equals("назад")){
+            SendMessage sendMessage =new SendMessage();
+            sendMessage.setText("Налаштування");
             sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
+            sendMessage.setReplyMarkup(Buttons.getButtonsOfSettings());
+
             execute(sendMessage);
-
-
         }
     }
 
-public void commandParseMenu(CallbackQuery callbackQuery)throws  TelegramApiException{
-    Long chatId1 = callbackQuery.getMessage().getChatId();
-    String callbackQueryData = callbackQuery.getData();
-    if (callbackQueryData.equals("Кількість знаків після коми")){
 
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setText("Кількість знаків після коми");
-        sendMessage.setChatId(chatId1);
-        sendMessage.setReplyMarkup(Buttons.getButtonsOfParse());
-        execute(sendMessage);
-
-    }
-}public void commandParseButton(CallbackQuery callbackQuery) throws  TelegramApiException{
-        Long chatId1 = callbackQuery.getMessage().getChatId();
-        String callbackQueryData = callbackQuery.getData();
-SendMessage sendMessage=new SendMessage();
-sendMessage.setText("ви обрали "+testBot.parseMenuButton(callbackQueryData));
-sendMessage.setChatId(chatId1);
-sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
-execute(sendMessage);
-    }
 
     @Override
     public void onUpdateReceived(Update update) {
