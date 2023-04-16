@@ -1,17 +1,16 @@
 package org.example.ui;
 
+import org.example.Currency;
 import org.example.bank.Bank;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 
 public class PrettyPrintCurrencyService {
-    public String convert(BigDecimal buy, BigDecimal sale, Bank bank, Currency currency){
+    public String convert(String buy, String sale, String bank, String currency){
         String temp = "Курс у ${bank}: ${currency}/ UAH \n Купівля: ${buy} \n Продаж: ${sale}";
-        return temp;
-               /* .replace("${bank}", bank.name())
+        return temp.replace("${bank}", bank)
                 .replace("${currency}", currency)
                 .replace("${buy}", buy)
-                .replace("${sale}", sale);*/
+                .replace("${sale}", sale);
     }
 }

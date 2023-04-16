@@ -117,5 +117,27 @@ public class Buttons {
 
         return keyboard;
     }
+    public static InlineKeyboardMarkup getButtonsCurr(){
+        InlineKeyboardButton button2 = InlineKeyboardButton
+                .builder()
+                .text("USD")
+                .callbackData("USD")
+                .build();
+        InlineKeyboardButton button3 = InlineKeyboardButton
+                .builder()
+                .text("EUR")
+                .callbackData("EUR")
+                .build();
+
+        InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
+                .builder()
+                .keyboard(Collections.singleton(Collections.singletonList(button2)))
+                .keyboard(Collections.singleton(Collections.singletonList(button3)))
+
+
+                .build();
+
+        return keyboard;
+    }
 
 }

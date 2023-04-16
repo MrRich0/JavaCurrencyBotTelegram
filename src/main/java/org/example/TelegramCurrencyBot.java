@@ -94,6 +94,25 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
                execute(sendMessage);
     }
+        if(callbackQueryData.equals("Валюта")){
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setText("Валюта");
+            sendMessage.setChatId(chatId1);
+            sendMessage.setReplyMarkup(Buttons.getButtonsCurr());
+            execute(sendMessage);
+
+        }
+        switch (callbackQueryData){
+            case "USD":
+            case "EUR":
+                testBot.Curracy(callbackQueryData);
+
+                SendMessage sendMessage=new SendMessage();
+                sendMessage.setText("ви вибрали"+testBot.getTmp());
+sendMessage.setChatId(chatId1);
+sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
+execute(sendMessage);
+        }
     }
 
     public void commandInfo(CallbackQuery callbackQuery) throws  TelegramApiException{

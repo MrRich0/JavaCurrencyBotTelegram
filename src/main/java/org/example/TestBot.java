@@ -3,7 +3,9 @@ package org.example;
 import org.example.ParseMono.MONOCurrencyRateService;
 import org.example.ParseNBY.NBYCurrencyRateService;
 import org.example.ParsePrivat.PrivatCurrencyRateService;
+import org.example.bank.Bank;
 import org.example.command.Buttons;
+import org.example.ui.PrettyPrintCurrencyService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.io.IOException;
@@ -17,10 +19,14 @@ public class TestBot {
     static Message notification = new Message();
 
     static Scanner scanner = new Scanner(System.in);
-    public static int bankChoice=1;
+    public static Bank bankChoice=Bank.ПриватБанк;
     public static int parseChose=2;
 
-    public static String tmp="USD";
+    public static String getTmp() {
+        return String.valueOf(tmp);
+    }
+
+    public static Currency tmp= Currency.USD;
     // інформація валюти
 
 
@@ -55,7 +61,7 @@ public class TestBot {
                     System.out.println("Яка валюта вас цікавить?");
                     System.out.println("Вибір:USD/EUR\n" +
                             ">");
-                    tmp=scanner.nextLine().toUpperCase();
+
                     break;
                 case "3":
                     System.out.println("1 - 2 коми\n" +
@@ -81,46 +87,52 @@ public class TestBot {
 
             switch (tmp){
 
-                case "НБУ": bankChoice=1;
+                case "НБУ": bankChoice=Bank.НБУ;
                 d="НБУ";
                     break;
-                case "Монобанк":bankChoice=2;
+                case "Монобанк":bankChoice=Bank.Монобанк;
                     d="Монобанк";
                     break;
                 case "ПриватБанк":
-                    bankChoice=3;
+                    bankChoice=Bank.ПриватБанк;
                     d="ПриватБанк";
                     break;
 
             }
         return d;
     }
-    public static RateResponceDto Curracy(String tmp){
+    public static RateResponceDto Curracy(String temp){
         RateResponceDto f = null;
-        switch (tmp ) {
+        switch (temp ) {
             case "USD":
                 switch (bankChoice){
-                    case 1:
+                    case НБУ:
                         f=apiNBY.getRates(parseChose).get(0);
+                        tmp=Currency.USD;
                         break;
 
-                    case 2:
+                    case Монобанк:
                         f= apiMONO.getRates(parseChose).get(0);
+                        tmp=Currency.USD;
                         break;
-                    case 3:
+                    case ПриватБанк:
                         f=  apiPRIVAT.getRates(parseChose).get(1);
+                        tmp=Currency.USD;
                         break;
                 }
                 break;
             case "EUR":
                 switch (bankChoice){
-                    case 1: f=apiNBY.getRates(parseChose).get(1);
+                    case НБУ: f=apiNBY.getRates(parseChose).get(1);
+                        tmp=Currency.EUR;
                         break;
-                    case 2:
+                    case Монобанк:
                         f= apiMONO.getRates(parseChose).get(1);
+                        tmp=Currency.EUR;
                         break;
-                    case 3:
-                        f=apiPRIVAT.getRates(parseChose).get(1);
+                    case ПриватБанк:
+                        f=apiPRIVAT.getRates(parseChose).get(0);
+                        tmp=Currency.EUR;
                         break;
                 }
                 break;
@@ -159,7 +171,11 @@ String f="";
    return f; }
 
     public static String getA() {
-        return String.valueOf(Curracy(tmp));
+
+        PrettyPrintCurrencyService prettyPrintCurrencyService=new PrettyPrintCurrencyService();
+        RateResponceDto f=Curracy(String.valueOf(tmp));
+
+        return prettyPrintCurrencyService.convert(String.valueOf(f.getRateBuy()),String.valueOf(f.getRateSell()),String.valueOf(bankChoice),String.valueOf(tmp)) ;
     }
 }
 
