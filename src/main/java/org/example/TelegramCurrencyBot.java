@@ -7,9 +7,12 @@ import org.example.command.NotificationSetting;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import static org.example.command.Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse;
@@ -18,6 +21,8 @@ import static org.example.command.Buttons.NumberSymbolsAfterCommaSetting.getButt
 public class TelegramCurrencyBot extends TelegramLongPollingBot {
     public static final Currency defaultCurrency = Currency.USD;
     BotLogic botLogic =new BotLogic();
+
+    private Message lastMessage;
 
     public TelegramCurrencyBot(DefaultBotOptions options) {
         super(options);
@@ -75,13 +80,20 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             sendMessage.setText("Кількість знаків після коми");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(getButtonsOfParse(chatId1));
-            execute(sendMessage);
+            lastMessage = execute(sendMessage);
 
         }
         if (Character.isDigit(callbackQueryData.charAt(0))){
+            /*InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+            botLogic.parseMenuButton(callbackQueryData);
+
+            EditMessageText editMessageText = new EditMessageText();
+            editMessageText.setChatId(lastMessage.getChatId());
+            editMessageText.setMessageId(lastMessage.getMessageId());
+            editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));*/
 
             SendMessage sendMessage=new SendMessage();
-            sendMessage.setText("ви обрали "+ botLogic.parseMenuButton(callbackQueryData));
+            sendMessage.setText(botLogic.parseMenuButton(callbackQueryData));
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));
             execute(sendMessage);
@@ -98,7 +110,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         case "ПриватБанк":
             BankSetting.setSavedBank(chatId1, Bank.ПриватБанк);
             SendMessage sendMessage = new SendMessage();
-            sendMessage.setText("ви вибрали "+ botLogic.bankMenuButton(callbackQueryData));
+            sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
             execute(sendMessage);
@@ -106,7 +118,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
            case "МоноБанк":
                BankSetting.setSavedBank(chatId1, Bank.Монобанк);
                sendMessage = new SendMessage();
-               sendMessage.setText("ви вибрали "+ botLogic.bankMenuButton(callbackQueryData));
+               sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
                sendMessage.setChatId(chatId1);
                sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
                execute(sendMessage);
@@ -114,7 +126,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
            case "НБУ":
                BankSetting.setSavedBank(chatId1, Bank.НБУ);
                sendMessage = new SendMessage();
-               sendMessage.setText("ви вибрали "+ botLogic.bankMenuButton(callbackQueryData));
+               sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
                sendMessage.setChatId(chatId1);
                sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
                execute(sendMessage);
@@ -134,7 +146,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                 botLogic.Curracy(callbackQueryData);
                 Buttons.getSavedCurrencies(chatId1);
                 SendMessage sendMessage=new SendMessage();
-                sendMessage.setText("ви вибрали"+ botLogic.getChosenCurrency());
+                sendMessage.setText(botLogic.getChosenCurrency());
                 sendMessage.setChatId(chatId1);
                 sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
                 execute(sendMessage);
@@ -143,7 +155,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                 botLogic.Curracy(callbackQueryData);
                 Buttons.getSavedCurrencies(chatId1);
                 sendMessage=new SendMessage();
-                sendMessage.setText("ви вибрали"+ botLogic.getChosenCurrency());
+                sendMessage.setText(botLogic.getChosenCurrency());
                 sendMessage.setChatId(chatId1);
                 sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
                 execute(sendMessage);
@@ -158,7 +170,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             execute(sendMessage);
         }
         if (callbackQueryData.equals("Час сповіщень")){
-            SendMessage sendMessage =new SendMessage();
+            SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Виберіть час сповіщення");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(NotificationSetting.getNotificationButtons(chatId1));
@@ -294,4 +306,5 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }
-}}
+      }
+}

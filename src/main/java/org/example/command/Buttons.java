@@ -16,12 +16,12 @@ public class Buttons {
     public static InlineKeyboardMarkup getButtonsInfoAndSettings(){
         InlineKeyboardButton buttonInfo = InlineKeyboardButton
                 .builder()
-                .text("Отримати інформацію")
+                .text("✉️"+"Отримати інформацію")
                 .callbackData("Отримати інформацію")
                 .build();
         InlineKeyboardButton buttonSettings = InlineKeyboardButton
                 .builder()
-                .text("Налаштування")
+                .text("⚙️" + "Налаштування")
                 .callbackData("Налаштування")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
@@ -40,17 +40,17 @@ public class Buttons {
                 .build();
         InlineKeyboardButton buttonBank = InlineKeyboardButton
                 .builder()
-                .text("Банк")
+                .text("\uD83C\uDFE6" + "Банк")
                 .callbackData("Банк")
                 .build();
         InlineKeyboardButton buttonCurrency = InlineKeyboardButton
                 .builder()
-                .text("Валюта")
+                .text("💵" + "Валюта")
                 .callbackData("Валюта")
                 .build();
         InlineKeyboardButton buttonTime = InlineKeyboardButton
                 .builder()
-                .text("Час сповіщень")
+                .text("🕐" + "Час сповіщень")
                 .callbackData("Час сповіщень")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
@@ -98,7 +98,7 @@ public class Buttons {
              .build();
      InlineKeyboardButton buttonBack = InlineKeyboardButton
              .builder()
-             .text("назад")
+             .text("🔙" + "Назад")
              .callbackData("назад")
              .build();
      InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
