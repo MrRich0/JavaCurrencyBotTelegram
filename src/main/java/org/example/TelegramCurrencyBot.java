@@ -47,6 +47,8 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsOfSettings());
             execute(sendMessage);
+
+
         }
     }
 
