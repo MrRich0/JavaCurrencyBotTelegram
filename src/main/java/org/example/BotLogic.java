@@ -19,13 +19,8 @@ public class BotLogic {
         return String.valueOf(chosenCurrency);
     }
 
-    public static Currency chosenCurrency= Currency.USD;
+    public static Currency chosenCurrency= TelegramCurrencyBot.defaultCurrency;
     // інформація валюти
-
-
-
-
-
 
 
     public static String bankMenuButton(String tmp){
@@ -37,8 +32,8 @@ public class BotLogic {
                 case "НБУ": bankChoice=Bank.НБУ;
                     message="НБУ";
                     break;
-                case "Монобанк":bankChoice=Bank.Монобанк;
-                    message="Монобанк";
+                case "МоноБанк":bankChoice=Bank.Монобанк;
+                    message="МоноБанк";
                     break;
                 case "ПриватБанк":
                     bankChoice=Bank.ПриватБанк;
@@ -97,7 +92,6 @@ String parseMessage="";
                 case "2": parseChose=2;
                     parseMessage= String.valueOf(parseChose);
 
-
                     break;
                 case "3":parseChose=3;
                     parseMessage= String.valueOf(parseChose);
@@ -113,7 +107,6 @@ String parseMessage="";
    return parseMessage; }
 
     public static String getFinalMessage() {
-
         PrettyPrintCurrencyService prettyPrintCurrencyService=new PrettyPrintCurrencyService();
         RateResponceDto currencyInfo=Curracy(String.valueOf(chosenCurrency));
 
