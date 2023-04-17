@@ -22,7 +22,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
     public static final Currency defaultCurrency = Currency.USD;
     BotLogic botLogic =new BotLogic();
 
-    private Message lastMessage;
+    private Message lastMessageCom,lastMessageBank,lastMessageCUR;
 
     public TelegramCurrencyBot(DefaultBotOptions options) {
         super(options);
@@ -80,85 +80,75 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             sendMessage.setText("Кількість знаків після коми");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(getButtonsOfParse(chatId1));
-            lastMessage = execute(sendMessage);
+            lastMessageCom = execute(sendMessage);
 
         }
         if (Character.isDigit(callbackQueryData.charAt(0))){
-            /*InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
             botLogic.parseMenuButton(callbackQueryData);
-
+            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
             EditMessageText editMessageText = new EditMessageText();
-            editMessageText.setChatId(lastMessage.getChatId());
-            editMessageText.setMessageId(lastMessage.getMessageId());
-            editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));*/
+            editMessageText.setChatId(lastMessageCom.getChatId());
+            editMessageText.setMessageId(lastMessageCom.getMessageId());
+editMessageText.setText("Кількість знаків після коми");
+            editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));
 
-            SendMessage sendMessage=new SendMessage();
-            sendMessage.setText(botLogic.parseMenuButton(callbackQueryData));
-            sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));
-            execute(sendMessage);
+
+            execute(editMessageText);
         }
         if (callbackQueryData.equals("Банк")) {
 
             SendMessage sendMessage = new SendMessage();
-            sendMessage.setText("Банк");
+            sendMessage.setText("\uD83C\uDFE6"+"Банк");
             sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
-            execute(sendMessage);
+            sendMessage.setReplyMarkup(Buttons.Num.getButtonsBank(chatId1));
+            lastMessageBank= execute(sendMessage);
         }
     switch (callbackQueryData){
-        case "ПриватБанк":
-            BankSetting.setSavedBank(chatId1, Bank.ПриватБанк);
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
-            sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
-            execute(sendMessage);
+        case "ПриватБанк","МоноБанк","НБУ":
+            botLogic.bankMenuButton(callbackQueryData);
+
+            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+            EditMessageText editMessageText = new EditMessageText();
+            editMessageText.setChatId(lastMessageBank.getChatId());
+            editMessageText.setMessageId(lastMessageBank.getMessageId());
+            editMessageText.setText("\uD83C\uDFE6" + "Банк");
+            editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.Num.getButtonsBank(chatId1));
+
+            execute(editMessageText);
             break;
-           case "МоноБанк":
-               BankSetting.setSavedBank(chatId1, Bank.Монобанк);
-               sendMessage = new SendMessage();
-               sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
-               sendMessage.setChatId(chatId1);
-               sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
-               execute(sendMessage);
-               break;
-           case "НБУ":
-               BankSetting.setSavedBank(chatId1, Bank.НБУ);
-               sendMessage = new SendMessage();
-               sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
-               sendMessage.setChatId(chatId1);
-               sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
-               execute(sendMessage);
-               break;
+
     }
         if(callbackQueryData.equals("Валюта")){
             SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Валюта");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
-            execute(sendMessage);
+            lastMessageCUR= execute(sendMessage);
 
 
         }
         switch (callbackQueryData){
-            case "USD":
+//            case "USD":
+//                botLogic.Curracy(callbackQueryData);
+//                Buttons.getSavedCurrencies(chatId1);
+//                SendMessage sendMessage=new SendMessage();
+//                sendMessage.setText(botLogic.getChosenCurrency());
+//                sendMessage.setChatId(chatId1);
+//                sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
+//                execute(sendMessage);
+//                break;
+            case "EUR","USD":
                 botLogic.Curracy(callbackQueryData);
-                Buttons.getSavedCurrencies(chatId1);
-                SendMessage sendMessage=new SendMessage();
-                sendMessage.setText(botLogic.getChosenCurrency());
-                sendMessage.setChatId(chatId1);
-                sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
-                execute(sendMessage);
-                break;
-            case "EUR":
-                botLogic.Curracy(callbackQueryData);
-                Buttons.getSavedCurrencies(chatId1);
-                sendMessage=new SendMessage();
-                sendMessage.setText(botLogic.getChosenCurrency());
-                sendMessage.setChatId(chatId1);
-                sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
-                execute(sendMessage);
+
+                InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+                EditMessageText editMessageText=new EditMessageText();
+                editMessageText.setChatId(lastMessageCUR.getChatId());
+                editMessageText.setMessageId(lastMessageCUR.getMessageId());
+                editMessageText.setText(botLogic.getChosenCurrency());
+                editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.getButtonsCurr(chatId1));
+
+                execute(editMessageText);
                 break;
         }
         if (callbackQueryData.equals("назад")){

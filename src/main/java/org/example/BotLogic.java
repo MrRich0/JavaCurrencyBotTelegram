@@ -6,6 +6,10 @@ import org.example.ParsePrivat.PrivatCurrencyRateService;
 import org.example.bank.Bank;
 import org.example.ui.PrettyPrintCurrencyService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 
 public class BotLogic {
     static   CurrencyRateApiService apiNBY = new NBYCurrencyRateService();
@@ -19,9 +23,10 @@ public class BotLogic {
         return String.valueOf(chosenCurrency);
     }
 
-    public static Currency chosenCurrency= TelegramCurrencyBot.defaultCurrency;
+    public static List<Currency> chosenCurrency= new ArrayList<>();
+    static {chosenCurrency.add(Currency.USD);}
     // інформація валюти
-
+   public static HashMap<String,RateResponceDto> currencyInfo = new HashMap<>();
 
     public static String bankMenuButton(String tmp){
         String message="";
@@ -43,47 +48,67 @@ public class BotLogic {
             }
         return message;
     }
-    public static RateResponceDto Curracy(String temp){
-        RateResponceDto currencyInfo = null;
+    public static void Curracy(String temp){
+int counter=0;
         switch (temp ) {
             case "USD":
-                switch (bankChoice){
-                    case НБУ:
-                        currencyInfo=apiNBY.getRates(parseChose).get(0);
-                        chosenCurrency=Currency.USD;
-                        break;
+                if (!chosenCurrency.contains(Currency.USD)) {
+                    chosenCurrency.add(Currency.USD);
 
-                    case Монобанк:
-                        currencyInfo= apiMONO.getRates(parseChose).get(0);
-                        chosenCurrency=Currency.USD;
-                        break;
-                    case ПриватБанк:
-                        currencyInfo=  apiPRIVAT.getRates(parseChose).get(1);
-                        chosenCurrency=Currency.USD;
-                        break;
+                } else {
+                    chosenCurrency.remove(Currency.USD);
+
                 }
                 break;
-            case "EUR":
-                switch (bankChoice){
-                    case НБУ: currencyInfo=apiNBY.getRates(parseChose).get(1);
-                        chosenCurrency=Currency.EUR;
-                        break;
-                    case Монобанк:
-                        currencyInfo= apiMONO.getRates(parseChose).get(1);
-                        chosenCurrency=Currency.EUR;
-                        break;
-                    case ПриватБанк:
-                        currencyInfo=apiPRIVAT.getRates(parseChose).get(0);
-                        chosenCurrency=Currency.EUR;
-                        break;
-                }
+            case "EUR":if (!chosenCurrency.contains(Currency.EUR)) {
+                chosenCurrency.add(Currency.EUR);
+
+            } else {
+                chosenCurrency.remove(Currency.EUR);
+
+            }
                 break;
             default:
                 System.out.println("На жаль валюти " + chosenCurrency +" немає!Спробуйте ще раз.");
         }
-        return currencyInfo;
-    }
 
+    }
+    public static void CurracyI(List temp){
+
+        switch (bankChoice ) {
+            case НБУ:
+               if(temp.contains(Currency.USD)){
+                    currencyInfo.put("USD",apiNBY.getRates(parseChose).get(0));
+                }else {
+                    currencyInfo.put("USD",null);
+           }if(temp.contains(Currency.EUR)){
+                currencyInfo.put("EUR",apiNBY.getRates(parseChose).get(1));
+            }else { currencyInfo.put("EUR",null);}
+               break;
+
+            case Монобанк:
+                if(temp.contains(Currency.USD)){
+                    currencyInfo.put("USD",apiMONO.getRates(parseChose).get(0));
+                }else {
+                    currencyInfo.put("USD",null);
+                }if(temp.contains(Currency.EUR)){
+                currencyInfo.put("EUR",apiMONO.getRates(parseChose).get(1));
+            }else { currencyInfo.put("EUR",null);}
+                break;
+            case ПриватБанк:
+                if(temp.contains(Currency.USD)){
+                    currencyInfo.put("USD",apiPRIVAT.getRates(parseChose).get(1));
+                }else {
+                    currencyInfo.put("USD",null);
+                }if(temp.contains(Currency.EUR)){
+                currencyInfo.put("EUR",apiPRIVAT.getRates(parseChose).get(0));
+            }else { currencyInfo.put("EUR",null);}
+                break;
+            default:
+                System.out.println("На жаль валюти " + chosenCurrency +" немає!Спробуйте ще раз.");
+        }
+
+    }
     public static String parseMenuButton(String chose ){
 
 String parseMessage="";
@@ -108,9 +133,19 @@ String parseMessage="";
 
     public static String getFinalMessage() {
         PrettyPrintCurrencyService prettyPrintCurrencyService=new PrettyPrintCurrencyService();
-        RateResponceDto currencyInfo=Curracy(String.valueOf(chosenCurrency));
-
-        return prettyPrintCurrencyService.convert(String.valueOf(currencyInfo.getRateBuy()),String.valueOf(currencyInfo.getRateSell()),String.valueOf(bankChoice),String.valueOf(chosenCurrency)) ;
+        CurracyI(chosenCurrency);
+     RateResponceDto USD=currencyInfo.get("USD");
+        RateResponceDto EUR=currencyInfo.get("EUR");
+        String finalMassage="Банк "+bankChoice;
+        String finalMassage2="";
+        String finalMassage3="";
+        if(USD!=null){
+            finalMassage2=prettyPrintCurrencyService.convert(String.valueOf(USD.getRateBuy()),String.valueOf(USD.getRateSell()),String.valueOf(USD.getCurrencyFrom()));
+        }if (EUR!=null){
+            finalMassage3=prettyPrintCurrencyService.convert(String.valueOf(EUR.getRateBuy()),String.valueOf(EUR.getRateSell()),String.valueOf(EUR.getCurrencyFrom()));
+        }
+//
+        return finalMassage+finalMassage2+finalMassage3;
     }
 }
 

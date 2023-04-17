@@ -9,9 +9,11 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.*;
 
 import static org.example.BotLogic.chosenCurrency;
+import static org.example.bank.Bank.*;
 import static org.example.command.BankSetting.getSavedBank;
 
 public class Buttons {
+public static BotLogic botLogic=new BotLogic();
 
     public static InlineKeyboardMarkup getButtonsInfoAndSettings(){
         InlineKeyboardButton buttonInfo = InlineKeyboardButton
@@ -112,41 +114,60 @@ public class Buttons {
      return keyboard;
  }
      }
+    public static class Num{
+        static BotLogic botLogic=new BotLogic();
+
+        static String setButton2Name() {
+            return  (String.valueOf(BotLogic.bankChoice).equals("НБУ")) ? "НБУ" + " ✅" : "НБУ" ;
+        }
+
+        static   String setButton3Name() {
+            return  (String.valueOf(BotLogic.bankChoice).equals("Монобанк")) ? "МоноБанк" + " ✅" : "МоноБанк" ;
+        }
+
+        static   String setButton4Name() {
+            return  (String.valueOf(BotLogic.bankChoice).equals("ПриватБанк")) ? "ПриватБанк" + " ✅" : "ПриватБанк" ;
+        }
     public static InlineKeyboardMarkup getButtonsBank(Long chatId){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()
-                .text((getSavedBank(chatId).equals(Bank.НБУ)) ? "НБУ" + " ✅" : "НБУ")
+                .text(setButton2Name())
                 .callbackData("НБУ")
                 .build();
         InlineKeyboardButton button3 = InlineKeyboardButton
                 .builder()
-                .text((getSavedBank(chatId).equals(Bank.Монобанк)) ? "МоноБанк" + " ✅" : "МоноБанк")
+                .text(setButton3Name())
                 .callbackData("МоноБанк")
                 .build();
         InlineKeyboardButton button4 = InlineKeyboardButton
                 .builder()
-                .text((getSavedBank(chatId).equals(Bank.ПриватБанк)) ? "ПриватБанк" + " ✅" : "ПриватБанк")
+                .text(setButton4Name())
                 .callbackData("ПриватБанк")
+                .build();
+        InlineKeyboardButton buttonBack = InlineKeyboardButton
+                .builder()
+                .text("🔙" + "Назад")
+                .callbackData("назад")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
                 .builder()
                 .keyboard(Collections.singleton(Collections.singletonList(button2)))
                 .keyboard(Collections.singleton(Collections.singletonList(button3)))
                 .keyboard(Collections.singleton(Collections.singletonList(button4)))
-
+                .keyboard(Collections.singleton(Collections.singletonList(buttonBack)))
                 .build();
 
         return keyboard;
-    }
+    }}
     public static InlineKeyboardMarkup getButtonsCurr(Long chatId){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()
-                .text((getSavedCurrencies(chatId).contains(Currency.USD)) ? "USD" + " ✅" : "USD")
+                .text((chosenCurrency.contains(Currency.USD)) ? "USD" + " ✅" : "USD")
                 .callbackData("USD")
                 .build();
         InlineKeyboardButton button3 = InlineKeyboardButton
                 .builder()
-                .text((getSavedCurrencies(chatId).contains(Currency.EUR)) ? "EUR" + " ✅" : "EUR")
+                .text((chosenCurrency.contains(Currency.EUR)) ? "EUR" + " ✅" : "EUR")
                 .callbackData("EUR")
                 .build();
 
@@ -159,17 +180,17 @@ public class Buttons {
                 .build();
 
         return keyboard;
-    }
-    private static Map<Long, List<Currency>> savedCurrencies = new HashMap<>();
+    }}
 
-    public static List<Currency> getSavedCurrencies(long chatId){
-        if (savedCurrencies.containsKey(chatId)) {
-            return savedCurrencies.get(chatId);
-        } else {
-            List<Currency> savedList = new ArrayList<>();
-            savedList.add(chosenCurrency);
-            return savedList;
-        }
-    }
 
-}
+//    public static List<Currency> getSavedCurrencies(long chatId){
+//        if (savedCurrencies.containsKey(chatId)) {
+//            return savedCurrencies.get(chatId);
+//        } else {
+//            List<Currency> savedList = new ArrayList<>();
+//            savedList.add(chosenCurrency);
+//            return savedList;
+//        }
+//    }
+//
+//}
