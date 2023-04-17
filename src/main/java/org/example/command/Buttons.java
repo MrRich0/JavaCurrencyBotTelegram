@@ -1,29 +1,27 @@
 package org.example.command;
 
 import org.example.BotLogic;
+import org.example.Currency;
+import org.example.bank.Bank;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static org.example.BotLogic.chosenCurrency;
+import static org.example.command.BankSetting.getSavedBank;
 
 public class Buttons {
 
     public static InlineKeyboardMarkup getButtonsInfoAndSettings(){
         InlineKeyboardButton buttonInfo = InlineKeyboardButton
                 .builder()
-                .text("Отримати інформацію")
+                .text("✉️"+"Отримати інформацію")
                 .callbackData("Отримати інформацію")
                 .build();
         InlineKeyboardButton buttonSettings = InlineKeyboardButton
                 .builder()
-                .text("Налаштування")
+                .text("⚙️" + "Налаштування")
                 .callbackData("Налаштування")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
@@ -42,17 +40,17 @@ public class Buttons {
                 .build();
         InlineKeyboardButton buttonBank = InlineKeyboardButton
                 .builder()
-                .text("Банк")
+                .text("\uD83C\uDFE6" + "Банк")
                 .callbackData("Банк")
                 .build();
         InlineKeyboardButton buttonCurrency = InlineKeyboardButton
                 .builder()
-                .text("Валюта")
+                .text("💵" + "Валюта")
                 .callbackData("Валюта")
                 .build();
         InlineKeyboardButton buttonTime = InlineKeyboardButton
                 .builder()
-                .text("Час сповіщень")
+                .text("🕐" + "Час сповіщень")
                 .callbackData("Час сповіщень")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
@@ -66,7 +64,7 @@ public class Buttons {
         return keyboard;
 
     }
-     public static class NumberSimbolsAfterCommaSetting  {
+     public static class NumberSymbolsAfterCommaSetting {
     static BotLogic botLogic=new BotLogic();
 
     static String setButton2Name() {
@@ -100,7 +98,7 @@ public class Buttons {
              .build();
      InlineKeyboardButton buttonBack = InlineKeyboardButton
              .builder()
-             .text("назад")
+             .text("🔙" + "Назад")
              .callbackData("назад")
              .build();
      InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
@@ -113,24 +111,21 @@ public class Buttons {
 
      return keyboard;
  }
-
-
-
      }
-    public static InlineKeyboardMarkup getButtonsBank(){
+    public static InlineKeyboardMarkup getButtonsBank(Long chatId){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()
-                .text("НБУ")
+                .text((getSavedBank(chatId).equals(Bank.НБУ)) ? "НБУ" + " ✅" : "НБУ")
                 .callbackData("НБУ")
                 .build();
         InlineKeyboardButton button3 = InlineKeyboardButton
                 .builder()
-                .text("Монобанк")
-                .callbackData("Монобанк")
+                .text((getSavedBank(chatId).equals(Bank.Монобанк)) ? "МоноБанк" + " ✅" : "МоноБанк")
+                .callbackData("МоноБанк")
                 .build();
         InlineKeyboardButton button4 = InlineKeyboardButton
                 .builder()
-                .text("ПриватБанк")
+                .text((getSavedBank(chatId).equals(Bank.ПриватБанк)) ? "ПриватБанк" + " ✅" : "ПриватБанк")
                 .callbackData("ПриватБанк")
                 .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
@@ -143,15 +138,15 @@ public class Buttons {
 
         return keyboard;
     }
-    public static InlineKeyboardMarkup getButtonsCurr(){
+    public static InlineKeyboardMarkup getButtonsCurr(Long chatId){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()
-                .text("USD")
+                .text((getSavedCurrencies(chatId).contains(Currency.USD)) ? "USD" + " ✅" : "USD")
                 .callbackData("USD")
                 .build();
         InlineKeyboardButton button3 = InlineKeyboardButton
                 .builder()
-                .text("EUR")
+                .text((getSavedCurrencies(chatId).contains(Currency.EUR)) ? "EUR" + " ✅" : "EUR")
                 .callbackData("EUR")
                 .build();
 
@@ -164,6 +159,17 @@ public class Buttons {
                 .build();
 
         return keyboard;
+    }
+    private static Map<Long, List<Currency>> savedCurrencies = new HashMap<>();
+
+    public static List<Currency> getSavedCurrencies(long chatId){
+        if (savedCurrencies.containsKey(chatId)) {
+            return savedCurrencies.get(chatId);
+        } else {
+            List<Currency> savedList = new ArrayList<>();
+            savedList.add(chosenCurrency);
+            return savedList;
+        }
     }
 
 }

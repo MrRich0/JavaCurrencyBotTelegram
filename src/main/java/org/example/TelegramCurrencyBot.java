@@ -1,20 +1,29 @@
 package org.example;
 
+import org.example.bank.Bank;
+import org.example.command.BankSetting;
 import org.example.command.Buttons;
 import org.example.command.NotificationSetting;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import static org.example.command.Buttons.NumberSimbolsAfterCommaSetting.getButtonsOfParse;
+import static org.example.command.Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse;
 
 
 public class TelegramCurrencyBot extends TelegramLongPollingBot {
+    public static final Currency defaultCurrency = Currency.USD;
     BotLogic botLogic =new BotLogic();
+
+    private Message lastMessage;
+
     public TelegramCurrencyBot(DefaultBotOptions options) {
         super(options);
     }
@@ -32,6 +41,8 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
     public void commandStart(Update update) throws TelegramApiException {
         Long chatId1 = update.getMessage().getChatId();
         String text = update.getMessage().getText();
+        Message message = update.getMessage();
+        Long chatId = message.getChatId();
         if (text.equals("/start")) {
 
             SendMessage sendMessage = new SendMessage();
@@ -43,6 +54,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
     }
 
     public void commandSettings(CallbackQuery callbackQuery) throws TelegramApiException {
+        Message message = callbackQuery.getMessage();
         Long chatId1 = callbackQuery.getMessage().getChatId();
         String callbackQueryData = callbackQuery.getData();
         if (callbackQueryData.equals("Налаштування")) {
@@ -68,15 +80,22 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             sendMessage.setText("Кількість знаків після коми");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(getButtonsOfParse(chatId1));
-            execute(sendMessage);
+            lastMessage = execute(sendMessage);
 
         }
         if (Character.isDigit(callbackQueryData.charAt(0))){
+            /*InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+            botLogic.parseMenuButton(callbackQueryData);
+
+            EditMessageText editMessageText = new EditMessageText();
+            editMessageText.setChatId(lastMessage.getChatId());
+            editMessageText.setMessageId(lastMessage.getMessageId());
+            editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));*/
 
             SendMessage sendMessage=new SendMessage();
-            sendMessage.setText("ви обрали "+ botLogic.parseMenuButton(callbackQueryData));
+            sendMessage.setText(botLogic.parseMenuButton(callbackQueryData));
             sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.NumberSimbolsAfterCommaSetting.getButtonsOfParse(chatId1));
+            sendMessage.setReplyMarkup(Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));
             execute(sendMessage);
         }
         if (callbackQueryData.equals("Банк")) {
@@ -84,37 +103,63 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Банк");
             sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.getButtonsBank());
+            sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
             execute(sendMessage);
         }
     switch (callbackQueryData){
         case "ПриватБанк":
-           case "Монобанк":
-           case "НБУ":
-               SendMessage sendMessage = new SendMessage();
-               sendMessage.setText("ви вибрали "+ botLogic.bankMenuButton(callbackQueryData));
+            BankSetting.setSavedBank(chatId1, Bank.ПриватБанк);
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
+            sendMessage.setChatId(chatId1);
+            sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
+            execute(sendMessage);
+            break;
+           case "МоноБанк":
+               BankSetting.setSavedBank(chatId1, Bank.Монобанк);
+               sendMessage = new SendMessage();
+               sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
                sendMessage.setChatId(chatId1);
-               sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
+               sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
                execute(sendMessage);
+               break;
+           case "НБУ":
+               BankSetting.setSavedBank(chatId1, Bank.НБУ);
+               sendMessage = new SendMessage();
+               sendMessage.setText(botLogic.bankMenuButton(callbackQueryData));
+               sendMessage.setChatId(chatId1);
+               sendMessage.setReplyMarkup(Buttons.getButtonsBank(chatId1));
+               execute(sendMessage);
+               break;
     }
         if(callbackQueryData.equals("Валюта")){
             SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Валюта");
             sendMessage.setChatId(chatId1);
-            sendMessage.setReplyMarkup(Buttons.getButtonsCurr());
+            sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
             execute(sendMessage);
+
 
         }
         switch (callbackQueryData){
             case "USD":
+                botLogic.Curracy(callbackQueryData);
+                Buttons.getSavedCurrencies(chatId1);
+                SendMessage sendMessage=new SendMessage();
+                sendMessage.setText(botLogic.getChosenCurrency());
+                sendMessage.setChatId(chatId1);
+                sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
+                execute(sendMessage);
+                break;
             case "EUR":
                 botLogic.Curracy(callbackQueryData);
-
-                SendMessage sendMessage=new SendMessage();
-                sendMessage.setText("ви вибрали"+ botLogic.getChosenCurrency());
-sendMessage.setChatId(chatId1);
-sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
-execute(sendMessage);
+                Buttons.getSavedCurrencies(chatId1);
+                sendMessage=new SendMessage();
+                sendMessage.setText(botLogic.getChosenCurrency());
+                sendMessage.setChatId(chatId1);
+                sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
+                execute(sendMessage);
+                break;
         }
         if (callbackQueryData.equals("назад")){
             SendMessage sendMessage =new SendMessage();
@@ -125,7 +170,7 @@ execute(sendMessage);
             execute(sendMessage);
         }
         if (callbackQueryData.equals("Час сповіщень")){
-            SendMessage sendMessage =new SendMessage();
+            SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Виберіть час сповіщення");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(NotificationSetting.getNotificationButtons(chatId1));
@@ -243,8 +288,6 @@ execute(sendMessage);
             try {
                 commandStart(update);
 
-
-
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -263,4 +306,5 @@ execute(sendMessage);
                 e.printStackTrace();
             }
         }
-}}
+      }
+}
