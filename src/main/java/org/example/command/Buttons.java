@@ -171,12 +171,17 @@ public static BotLogic botLogic=new BotLogic();
                 .callbackData("EUR")
                 .build();
 
+        InlineKeyboardButton buttonBack = InlineKeyboardButton
+                .builder()
+                .text("🔙" + "Назад")
+                .callbackData("назад")
+                .build();
+
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
                 .builder()
                 .keyboard(Collections.singleton(Collections.singletonList(button2)))
                 .keyboard(Collections.singleton(Collections.singletonList(button3)))
-
-
+                .keyboard(Collections.singleton(Collections.singletonList(buttonBack)))
                 .build();
 
         return keyboard;

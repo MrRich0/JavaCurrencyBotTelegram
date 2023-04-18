@@ -268,8 +268,6 @@ editMessageText.setText("Кількість знаків після коми");
                 .build());
     }
 
-
-
     @Override
     public void onUpdateReceived(Update update) {
 
