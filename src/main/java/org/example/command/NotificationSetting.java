@@ -143,6 +143,8 @@ public class NotificationSetting implements Externalizable {
 
         KeyboardButton buttonNoNotification = new KeyboardButton();
         buttonNoNotification.setText(new NotificationSetting().setButtonNoNotificationName(chatId));
+        KeyboardButton back = new KeyboardButton();
+        back.setText("🏠"+ "Додому");
 
         List<KeyboardRow> keyboard = new ArrayList<>();
 
@@ -164,6 +166,7 @@ public class NotificationSetting implements Externalizable {
         KeyboardRow keyboardFourthRow = new KeyboardRow();
         keyboardFourthRow.add(button18);
         keyboardFourthRow.add(buttonNoNotification);
+        keyboardFourthRow.add(back);
 
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);

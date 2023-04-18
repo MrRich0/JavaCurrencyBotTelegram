@@ -126,18 +126,8 @@ editMessageText.setText("Кількість знаків після коми");
             sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
             lastMessageCUR= execute(sendMessage);
 
-
         }
         switch (callbackQueryData){
-//            case "USD":
-//                botLogic.Curracy(callbackQueryData);
-//                Buttons.getSavedCurrencies(chatId1);
-//                SendMessage sendMessage=new SendMessage();
-//                sendMessage.setText(botLogic.getChosenCurrency());
-//                sendMessage.setChatId(chatId1);
-//                sendMessage.setReplyMarkup(Buttons.getButtonsCurr(chatId1));
-//                execute(sendMessage);
-//                break;
             case "EUR","USD":
                 botLogic.Curracy(callbackQueryData);
 
@@ -172,11 +162,11 @@ editMessageText.setText("Кількість знаків після коми");
     private void handleMessage(Message message) throws TelegramApiException {
         String text = message.getText();
         switch (text) {
-            case "Повернутися":
+            case "🏠"+ "Додому":
                 execute(SendMessage.builder()
                         .chatId(message.getChatId().toString())
-                        .text("Оберіть бажану функцію.")
-                        .replyMarkup(Buttons.getButtonsOfSettings())
+                        .text("Ви повернулись на головне меню")
+                        .replyMarkup(Buttons.getButtonsInfoAndSettings())
                         .build());
                 break;
             case "9":
