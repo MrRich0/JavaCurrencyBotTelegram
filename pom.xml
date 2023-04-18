@@ -28,8 +28,6 @@
             <version>1.18.26</version>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
@@ -41,7 +39,6 @@
             <artifactId>telegrambotsextensions</artifactId>
             <version>6.5.0</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -51,5 +48,4 @@
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 
     </dependencies>
-
 </project>

@@ -18,7 +18,6 @@ public class PrivatCurrencyRateService implements CurrencyRateApiService {
     private static final Gson GSON = new Gson();
     private static final String url = "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5";
 
-
     @Override
     public List<RateResponceDto> getRates(Integer roundUp) {
         String text = null;

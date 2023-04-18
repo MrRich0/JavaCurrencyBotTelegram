@@ -271,7 +271,6 @@ editMessageText.setText("Кількість знаків після коми");
     @Override
     public void onUpdateReceived(Update update) {
 
-
         if (update.hasMessage() && update.getMessage().isCommand()) {
             try {
                 commandStart(update);
@@ -287,12 +286,12 @@ editMessageText.setText("Кількість знаків після коми");
                throw new RuntimeException(e);
           }
 
-        }else if (update.hasMessage() && update.getMessage().hasText()) {
+        } else if (update.hasMessage() && update.getMessage().hasText()) {
             try {
                 handleMessage(update.getMessage());
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
         }
-      }
+    }
 }

@@ -15,17 +15,15 @@ public class BotLogic {
     static   CurrencyRateApiService apiNBY = new NBYCurrencyRateService();
     static   CurrencyRateApiService apiMONO = new MONOCurrencyRateService();
     static   CurrencyRateApiService apiPRIVAT = new PrivatCurrencyRateService();
-
     public static Bank bankChoice=Bank.ПриватБанк;
     public static int parseChose=2;
 
     public static String getChosenCurrency() {
         return String.valueOf(chosenCurrency);
     }
-
     public static List<Currency> chosenCurrency= new ArrayList<>();
+
     static {chosenCurrency.add(Currency.USD);}
-    // інформація валюти
    public static HashMap<String,RateResponceDto> currencyInfo = new HashMap<>();
 
     public static String bankMenuButton(String tmp){
@@ -49,7 +47,7 @@ public class BotLogic {
         return message;
     }
     public static void Curracy(String temp){
-int counter=0;
+     int counter=0;
         switch (temp ) {
             case "USD":
                 if (!chosenCurrency.contains(Currency.USD)) {
@@ -129,12 +127,13 @@ String parseMessage="";
 
             }
 
-   return parseMessage; }
+   return parseMessage;
+    }
 
     public static String getFinalMessage() {
         PrettyPrintCurrencyService prettyPrintCurrencyService=new PrettyPrintCurrencyService();
         CurracyI(chosenCurrency);
-     RateResponceDto USD=currencyInfo.get("USD");
+        RateResponceDto USD=currencyInfo.get("USD");
         RateResponceDto EUR=currencyInfo.get("EUR");
         String finalMassage="Банк "+bankChoice;
         String finalMassage2="";
@@ -144,7 +143,6 @@ String parseMessage="";
         }if (EUR!=null){
             finalMassage3=prettyPrintCurrencyService.convert(String.valueOf(EUR.getRateBuy()),String.valueOf(EUR.getRateSell()),String.valueOf(EUR.getCurrencyFrom()));
         }
-//
         return finalMassage+finalMassage2+finalMassage3;
     }
 }

@@ -19,7 +19,6 @@ public class MONOCurrencyRateService implements CurrencyRateApiService {
     private static final Gson GSON = new Gson();
     private static final String url = "https://api.monobank.ua/bank/currency";
 
-
     @Override
     public List<RateResponceDto> getRates(Integer roundUp) {
         String text = null;

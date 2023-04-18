@@ -158,7 +158,8 @@ public static BotLogic botLogic=new BotLogic();
                 .build();
 
         return keyboard;
-    }}
+       }
+    }
     public static InlineKeyboardMarkup getButtonsCurr(Long chatId){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()
@@ -185,17 +186,5 @@ public static BotLogic botLogic=new BotLogic();
                 .build();
 
         return keyboard;
-    }}
-
-
-//    public static List<Currency> getSavedCurrencies(long chatId){
-//        if (savedCurrencies.containsKey(chatId)) {
-//            return savedCurrencies.get(chatId);
-//        } else {
-//            List<Currency> savedList = new ArrayList<>();
-//            savedList.add(chosenCurrency);
-//            return savedList;
-//        }
-//    }
-//
-//}
+    }
+}
