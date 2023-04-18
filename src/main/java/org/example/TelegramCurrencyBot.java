@@ -149,16 +149,16 @@ editMessageText.setText("Кількість знаків після коми");
 
             execute(sendMessage);
         }
-        if (callbackQueryData.equals("Час сповіщень")){
+          if (callbackQueryData.equals("Час сповіщень")){
             SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Виберіть час сповіщення");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(NotificationSetting.getNotificationButtons(chatId1));
 
             execute(sendMessage);
-        }
-
     }
+    }
+
     private void handleMessage(Message message) throws TelegramApiException {
         String text = message.getText();
         switch (text) {

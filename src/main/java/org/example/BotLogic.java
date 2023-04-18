@@ -58,7 +58,8 @@ public class BotLogic {
 
                 }
                 break;
-            case "EUR":if (!chosenCurrency.contains(Currency.EUR)) {
+            case "EUR":
+                if (!chosenCurrency.contains(Currency.EUR)) {
                 chosenCurrency.add(Currency.EUR);
 
             } else {

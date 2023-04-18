@@ -1,6 +1,8 @@
 package org.example.command;
 
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
@@ -40,13 +42,13 @@ public class NotificationSetting implements Externalizable {
 
         private int time;
 
-        Notification(int time) {
-            this.time = time;
+        Notification(int time) {this.time = time;
         }
 
         public int getTime() {
             return time;
         }
+
     }
 
     private static Map<Long, Notification> notificationMap = new HashMap<>();
@@ -176,5 +178,7 @@ public class NotificationSetting implements Externalizable {
         notificationMarkup.setKeyboard(keyboard);
 
         return notificationMarkup;
-    }
+
+   }
 }
+

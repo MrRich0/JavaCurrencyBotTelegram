@@ -163,12 +163,12 @@ public static BotLogic botLogic=new BotLogic();
     public static InlineKeyboardMarkup getButtonsCurr(Long chatId){
         InlineKeyboardButton button2 = InlineKeyboardButton
                 .builder()
-                .text((chosenCurrency.contains(Currency.USD)) ? "USD" + " ✅" : "USD")
+                .text((chosenCurrency.contains(Currency.USD)) ? "\uD83C\uDDFA\uD83C\uDDF8" + "USD" + " ✅" : "\uD83C\uDDFA\uD83C\uDDF8" + "USD")
                 .callbackData("USD")
                 .build();
         InlineKeyboardButton button3 = InlineKeyboardButton
                 .builder()
-                .text((chosenCurrency.contains(Currency.EUR)) ? "EUR" + " ✅" : "EUR")
+                .text((chosenCurrency.contains(Currency.EUR)) ? "🇪🇺" + "EUR" + " ✅" : "🇪🇺" + "EUR")
                 .callbackData("EUR")
                 .build();
 

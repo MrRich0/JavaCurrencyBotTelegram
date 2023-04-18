@@ -2,7 +2,7 @@ package org.example;
 
 public class BotConstants {
 
-    public static String BOT_TOKEN = "6052373636:AAFseotSlQE7LPybp9GUlDnBkWXxc8yRDC4";
+    public static String BOT_TOKEN = System.getenv("BOT_TOKEN");
     public static final String BOT_NAME = "КурсВалютБот";
 
 }
