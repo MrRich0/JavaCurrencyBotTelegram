@@ -108,10 +108,11 @@ public class NotificationSetting implements Externalizable {
     String setButtonNoNotificationName(Long chatId) {
         return  (getNotification(chatId).equals(Notification.OFF_NOTIFY)) ? "Вимкнути сповіщення" + " ✅" : "Вимкнути сповіщення" ;
     }
-    public static ReplyKeyboardMarkup getNotificationButtons(long chatId) {
+      public static ReplyKeyboardMarkup getNotificationButtons(long chatId) {
         ReplyKeyboardMarkup notificationMarkup = new ReplyKeyboardMarkup();
         notificationMarkup.setResizeKeyboard(true);
         notificationMarkup.setOneTimeKeyboard(true);
+
 
         KeyboardButton button9 = new KeyboardButton();
         button9.setText(new NotificationSetting().setButton9Name(chatId));

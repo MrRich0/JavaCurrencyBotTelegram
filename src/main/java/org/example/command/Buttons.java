@@ -3,8 +3,13 @@ package org.example.command;
 import org.example.BotLogic;
 import org.example.Currency;
 import org.example.bank.Bank;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.*;
 
@@ -29,7 +34,6 @@ public class Buttons {
                 .keyboard(Collections.singleton(Collections.singletonList(buttonInfo)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonSettings)))
                 .build();
-
         return keyboard;
     }
     public static InlineKeyboardMarkup getButtonsOfSettings(){
@@ -66,7 +70,6 @@ public class Buttons {
                 .keyboard(Collections.singleton(Collections.singletonList(buttonTime)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonBackMainMenu)))
                 .build();
-
         return keyboard;
 
     }
@@ -114,7 +117,6 @@ public class Buttons {
              .keyboard(Collections.singleton(Collections.singletonList(button4)))
              .keyboard(Collections.singleton(Collections.singletonList(buttonBack)))
              .build();
-
      return keyboard;
  }
      }
@@ -156,7 +158,6 @@ public class Buttons {
                 .keyboard(Collections.singleton(Collections.singletonList(button4)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonBack)))
                 .build();
-
         return keyboard;
        }
     }
@@ -184,7 +185,6 @@ public class Buttons {
                 .keyboard(Collections.singleton(Collections.singletonList(button3)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonBack)))
                 .build();
-
         return keyboard;
     }
 }
