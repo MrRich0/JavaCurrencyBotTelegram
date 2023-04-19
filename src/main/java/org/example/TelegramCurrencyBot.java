@@ -46,7 +46,9 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         if (text.equals("/start")) {
 
             SendMessage sendMessage = new SendMessage();
-            sendMessage.setText("Вітаємо вас! Цей бот допоможе відслідкувати актуальні курси валют");
+            sendMessage.setText("Ласкаво просимо! Цей бот допоможе відслідкувати актуальні курси валют\n" +
+                    "Щоб отримати інформацію про курс USD/UAH у ПриватБанку натисніть кнопку Отримати інформацію\n" +
+                    "Для того щоб змінити налаштування, обрати інший банк, валюту та інше натисніть кнопку Налаштування.");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
             execute(sendMessage);
