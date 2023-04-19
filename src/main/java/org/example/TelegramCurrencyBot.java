@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.command.Buttons;
 import org.example.command.NotificationSetting;
+import org.glassfish.jersey.server.ManagedAsync;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -41,6 +42,17 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         if (keyboard != null) {
             message.setReplyMarkup(keyboard);
         }
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+    private void sendMessageNotification(String text, Long chatId, ReplyKeyboardMarkup replyMarkup) {
+        SendMessage message = new SendMessage();
+                message.setChatId(chatId);
+                message.setText(text);
+                message.setReplyMarkup(replyMarkup);
         try {
             execute(message);
         } catch (TelegramApiException e) {
@@ -142,6 +154,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
     private void handleMessage(Message message) throws TelegramApiException {
         String text = message.getText();
         Long chatId = message.getChatId();
+        String chatID = message.getChatId().toString();
 
         switch (text) {
             case "🏠"+ "Додому":
@@ -149,91 +162,57 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                 break;
             case "9":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.NINE);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о  9 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  9 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "10":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.TEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 10 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  10 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "11":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.ELEVEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 11 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  11 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "12":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.TWELVE);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 12 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  12 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "13":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.THIRTEEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 13 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  13 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "14":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.FOURTEEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 14 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  14 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "15":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.FIFTEEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 15 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  15 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "16":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.SIXTEEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 16 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  16 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "17":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.SEVENTEEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 17 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  17 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "18":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.EIGHTEEN);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Надішлемо Вам сповіщення о 18 годині.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Надішлемо Вам сповіщення о  18 годині.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
+
             case "Вимкнути сповіщення":
                 NotificationSetting.setNotification(message.getChatId(), NotificationSetting.Notification.OFF_NOTIFY);
-                execute(SendMessage.builder()
-                        .chatId(message.getChatId().toString())
-                        .text("Ви вимкнули сповіщення.")
-                        .replyMarkup(NotificationSetting.getNotificationButtons(chatId))
-                        .build());
+                sendMessageNotification("Ви вимкнули сповіщення.", chatId, NotificationSetting.getNotificationButtons(chatId));
                 break;
         }
     }
@@ -245,7 +224,6 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                 .replyMarkup(Buttons.getButtonsInfoAndSettings())
                 .build());
     }
-
     @Override
     public void onUpdateReceived(Update update) {
 
@@ -256,12 +234,14 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         } else if (update.hasCallbackQuery()) {
-       try {
+
+            try {
               commandSettings(update.getCallbackQuery());
            } catch (TelegramApiException e) {
                throw new RuntimeException(e);
           }
         } else if (update.hasMessage() && update.getMessage().hasText()) {
+
             try {
                 handleMessage(update.getMessage());
             } catch (TelegramApiException e) {
