@@ -13,41 +13,12 @@ public class NBYCurrencyResponceDto {
 
     private Currency currencyTo = Currency.UAH;
 
-
-
-    public void setR030(int r030) {
-        this.r030 = r030;
-    }
-    public void setTxt(String txt) {
-        this.txt = txt;
-    }
-    public void setRate(BigDecimal rate) {
-        this.rate = rate;
-    }
-    public void setCc(Currency cc) {
-        this.cc = cc;
-    }
-    public void setExchangedate(String exchangedate) {
-        this.exchangedate = exchangedate;
-    }
-
-
-    public int getR030() {
-        return r030;
-    }
-    public String getTxt() {
-        return txt;
-    }
     public BigDecimal getRate() {
         return rate;
     }
     public Currency getCc() {
         return cc;
     }
-    public String getExchangedate() {
-        return exchangedate;
-    }
-
     public Currency getCurrencyTo() {
         return currencyTo;
     }

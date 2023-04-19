@@ -17,32 +17,15 @@ public class MONOCurrencyResponceDto {
         return currencyCodeA;
     }
 
-    public void setCurrencyCodeA(Integer currencyCodeA) {
-        this.currencyCodeA = currencyCodeA;
-    }
-
     public Integer getCurrencyCodeB() {
         return currencyCodeB;
     }
-
-    public void setCurrencyCodeB(Integer currencyCodeB) {
-        this.currencyCodeB = currencyCodeB;
-    }
-
     public BigDecimal getRateBuy() {
         return rateBuy;
     }
 
-    public void setRateBuy(BigDecimal rateBuy) {
-        this.rateBuy = rateBuy;
-    }
-
     public BigDecimal getRateSell() {
         return rateSell;
-    }
-
-    public void setRateSell(BigDecimal rateSell) {
-        this.rateSell = rateSell;
     }
 
     public Currency getCurrencyBuy() {

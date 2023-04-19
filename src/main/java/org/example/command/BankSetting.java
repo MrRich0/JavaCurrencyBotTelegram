@@ -18,12 +18,7 @@ public class BankSetting implements Externalizable {
         public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
             savedBank = (Map<Long, Bank>) objectInput.readObject();
         }
-
         private static Map<Long, Bank> savedBank = new HashMap<>();
-
-        public static void setSavedBank(Long chatId, Bank bank) {
-            savedBank.put(chatId, bank);
-        }
 
         public static Bank getSavedBank(Long chatId) {
             return savedBank.getOrDefault(chatId, Bank.ПриватБанк);

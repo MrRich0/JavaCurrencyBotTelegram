@@ -39,7 +39,6 @@ public class PrivatCurrencyRateService implements CurrencyRateApiService {
                 .collect(Collectors.toList());
 
     }
-
     private static List<PrivatCurrencyResponceDto> convertResponce(String text) {
         Type type = TypeToken
                 .getParameterized(List.class, PrivatCurrencyResponceDto.class)

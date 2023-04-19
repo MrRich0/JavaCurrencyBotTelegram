@@ -39,7 +39,6 @@ public class MONOCurrencyRateService implements CurrencyRateApiService {
                 })
                 .collect(Collectors.toList());
     }
-
     private static List<MONOCurrencyResponceDto> convertResponce(String text) {
         Type type = TypeToken
                 .getParameterized(List.class, MONOCurrencyResponceDto.class)

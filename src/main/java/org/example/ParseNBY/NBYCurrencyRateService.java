@@ -40,7 +40,6 @@ public class NBYCurrencyRateService implements CurrencyRateApiService {
                 })
                 .collect(Collectors.toList());
     }
-
     private List<NBYCurrencyResponceDto> convertResponce(String text) {
         Type type = TypeToken
                 .getParameterized(List.class, NBYCurrencyResponceDto.class)

@@ -16,11 +16,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import static org.example.command.Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse;
-
-
 public class TelegramCurrencyBot extends TelegramLongPollingBot {
-    public static final Currency defaultCurrency = Currency.USD;
-    BotLogic botLogic =new BotLogic();
+    BotLogic botLogic = new BotLogic();
 
     private Message lastMessageCom,lastMessageBank,lastMessageCUR;
 
@@ -41,10 +38,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
     public void commandStart(Update update) throws TelegramApiException {
         Long chatId1 = update.getMessage().getChatId();
         String text = update.getMessage().getText();
-        Message message = update.getMessage();
-        Long chatId = message.getChatId();
         if (text.equals("/start")) {
-
             SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Ласкаво просимо! Цей бот допоможе відслідкувати актуальні курси валют\n" +
                     "Щоб отримати інформацію про курс USD/UAH у ПриватБанку натисніть кнопку Отримати інформацію\n" +
@@ -54,9 +48,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             execute(sendMessage);
         }
     }
-
     public void commandSettings(CallbackQuery callbackQuery) throws TelegramApiException {
-        Message message = callbackQuery.getMessage();
         Long chatId1 = callbackQuery.getMessage().getChatId();
         String callbackQueryData = callbackQuery.getData();
         if (callbackQueryData.equals("Налаштування")) {
@@ -92,9 +84,8 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
             EditMessageText editMessageText = new EditMessageText();
             editMessageText.setChatId(lastMessageCom.getChatId());
             editMessageText.setMessageId(lastMessageCom.getMessageId());
-editMessageText.setText("Кількість знаків після коми");
+            editMessageText.setText("Кількість знаків після коми");
             editMessageText.setReplyMarkup(inlineKeyboardMarkup=Buttons.NumberSymbolsAfterCommaSetting.getButtonsOfParse(chatId1));
-
 
             execute(editMessageText);
         }
@@ -106,7 +97,7 @@ editMessageText.setText("Кількість знаків після коми");
             sendMessage.setReplyMarkup(Buttons.Num.getButtonsBank(chatId1));
             lastMessageBank= execute(sendMessage);
         }
-    switch (callbackQueryData){
+        switch (callbackQueryData){
         case "ПриватБанк","МоноБанк","НБУ":
             botLogic.bankMenuButton(callbackQueryData);
 
@@ -119,8 +110,7 @@ editMessageText.setText("Кількість знаків після коми");
 
             execute(editMessageText);
             break;
-
-    }
+        }
         if(callbackQueryData.equals("Валюта")){
             SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Валюта");
@@ -143,8 +133,8 @@ editMessageText.setText("Кількість знаків після коми");
                 execute(editMessageText);
                 break;
         }
-        if (callbackQueryData.equals("назад")){
-            SendMessage sendMessage =new SendMessage();
+         if (callbackQueryData.equals("назад")){
+            SendMessage sendMessage = new SendMessage();
             sendMessage.setText("Налаштування");
             sendMessage.setChatId(chatId1);
             sendMessage.setReplyMarkup(Buttons.getButtonsOfSettings());
@@ -158,7 +148,15 @@ editMessageText.setText("Кількість знаків після коми");
             sendMessage.setReplyMarkup(NotificationSetting.getNotificationButtons(chatId1));
 
             execute(sendMessage);
-    }
+          }
+        if (callbackQueryData.equals("Головне меню")){
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setText("Головне меню");
+            sendMessage.setChatId(chatId1);
+            sendMessage.setReplyMarkup(Buttons.getButtonsInfoAndSettings());
+
+            execute(sendMessage);
+        }
     }
 
     private void handleMessage(Message message) throws TelegramApiException {
@@ -250,7 +248,6 @@ editMessageText.setText("Кількість знаків після коми");
                 break;
         }
     }
-
     public void sendNotification(long chatId) throws TelegramApiException {
 
         execute(SendMessage.builder()
@@ -266,7 +263,6 @@ editMessageText.setText("Кількість знаків після коми");
         if (update.hasMessage() && update.getMessage().isCommand()) {
             try {
                 commandStart(update);
-
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -277,7 +273,6 @@ editMessageText.setText("Кількість знаків після коми");
            } catch (TelegramApiException e) {
                throw new RuntimeException(e);
           }
-
         } else if (update.hasMessage() && update.getMessage().hasText()) {
             try {
                 handleMessage(update.getMessage());

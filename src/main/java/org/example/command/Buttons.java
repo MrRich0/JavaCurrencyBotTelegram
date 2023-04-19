@@ -13,8 +13,6 @@ import static org.example.bank.Bank.*;
 import static org.example.command.BankSetting.getSavedBank;
 
 public class Buttons {
-public static BotLogic botLogic=new BotLogic();
-
     public static InlineKeyboardMarkup getButtonsInfoAndSettings(){
         InlineKeyboardButton buttonInfo = InlineKeyboardButton
                 .builder()
@@ -55,32 +53,38 @@ public static BotLogic botLogic=new BotLogic();
                 .text("🕐" + "Час сповіщень")
                 .callbackData("Час сповіщень")
                 .build();
+        InlineKeyboardButton buttonBackMainMenu = InlineKeyboardButton
+                .builder()
+                .text("Головне меню")
+                .callbackData("Головне меню")
+                .build();
         InlineKeyboardMarkup keyboard = InlineKeyboardMarkup
                 .builder()
                 .keyboard(Collections.singleton(Collections.singletonList(buttonNum)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonBank)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonCurrency)))
                 .keyboard(Collections.singleton(Collections.singletonList(buttonTime)))
+                .keyboard(Collections.singleton(Collections.singletonList(buttonBackMainMenu)))
                 .build();
 
         return keyboard;
 
     }
      public static class NumberSymbolsAfterCommaSetting {
-    static BotLogic botLogic=new BotLogic();
+     static BotLogic botLogic=new BotLogic();
 
-    static String setButton2Name() {
+     static String setButton2Name() {
         return  (String.valueOf(botLogic.parseChose).equals("2")) ? "2" + " ✅" : "2" ;
     }
 
-  static   String setButton3Name() {
+     static   String setButton3Name() {
         return  (String.valueOf(botLogic.parseChose).equals("3")) ? "3" + " ✅" : "3" ;
     }
 
-  static   String setButton4Name() {
+     static   String setButton4Name() {
         return  (String.valueOf(botLogic.parseChose).equals("4")) ? "4" + " ✅" : "4" ;
     }
- public  static   InlineKeyboardMarkup getButtonsOfParse(Long chatId){
+     public  static   InlineKeyboardMarkup getButtonsOfParse(Long chatId){
 
 
      InlineKeyboardButton button2 = InlineKeyboardButton
@@ -115,16 +119,12 @@ public static BotLogic botLogic=new BotLogic();
  }
      }
     public static class Num{
-        static BotLogic botLogic=new BotLogic();
-
         static String setButton2Name() {
             return  (String.valueOf(BotLogic.bankChoice).equals("НБУ")) ? "НБУ" + " ✅" : "НБУ" ;
         }
-
         static   String setButton3Name() {
             return  (String.valueOf(BotLogic.bankChoice).equals("Монобанк")) ? "МоноБанк" + " ✅" : "МоноБанк" ;
         }
-
         static   String setButton4Name() {
             return  (String.valueOf(BotLogic.bankChoice).equals("ПриватБанк")) ? "ПриватБанк" + " ✅" : "ПриватБанк" ;
         }

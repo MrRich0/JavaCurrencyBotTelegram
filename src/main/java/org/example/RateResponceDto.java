@@ -16,14 +16,9 @@ public class RateResponceDto {
         this.currencyFrom = currencyFrom;
     }
 
-    public Currency getCurrencyTo() {
-        return currencyTo;
-    }
-
     public void setCurrencyTo(Currency currencyTo) {
         this.currencyTo = currencyTo;
     }
-
     public BigDecimal getRateBuy() {
         return rateBuy;
     }
