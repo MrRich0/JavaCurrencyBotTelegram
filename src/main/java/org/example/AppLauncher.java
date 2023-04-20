@@ -1,6 +1,6 @@
 package org.example;
 
-public class BotTest {
+public class AppLauncher {
 
     public static void main(String[] args) {
 
