@@ -133,7 +133,6 @@ public class BotLogic {
                     parseMessage= String.valueOf(parseChose);
                     break;
             }
-
             return parseMessage;
     }
 

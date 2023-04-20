@@ -18,14 +18,15 @@ import static java.math.BigDecimal.ROUND_CEILING;
 public class MONOCurrencyRateService implements CurrencyRateApiService {
     private static final Gson GSON = new Gson();
     private static final String url = "https://api.monobank.ua/bank/currency";
-
+    private static String text2;
     @Override
     public List<RateResponceDto> getRates(Integer roundUp) {
         String text = null;
         try {
             text = Jsoup.connect(url).ignoreContentType(true).get().body().text();
+            text2 = text;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            text = text2;
         }
         List<MONOCurrencyResponceDto> responceDtos = convertResponce(text);
         return responceDtos.stream()

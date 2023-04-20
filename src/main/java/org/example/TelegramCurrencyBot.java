@@ -75,9 +75,9 @@ public class TelegramCurrencyBot extends TelegramLongPollingBot {
         }
     }
     public void commandStart(Update update) throws TelegramApiException {
-        String infoAndSettings = "Ласкаво просимо! Цей бот допоможе відслідкувати актуальні курси валют\n" +
-                "Щоб отримати інформацію про курс USD/UAH у ПриватБанку натисніть кнопку Отримати інформацію\n" +
-                "Для того щоб змінити налаштування, обрати інший банк, валюту та інше натисніть кнопку Налаштування.";
+        String infoAndSettings = "Ласкаво просимо! Цей бот допоможе відслідкувати актуальні курси валют.\n" +
+                "Щоб отримати інформацію про курс USD/UAH у ПриватБанку натисніть кнопку 'Отримати інформацію'.\n" +
+                "Для того щоб змінити налаштування, обрати інший банк, валюту та інше натисніть кнопку 'Налаштування'.";
         Long chatId1 = update.getMessage().getChatId();
         sendMessageAndKeyboard(infoAndSettings, chatId1, Buttons.getButtonsInfoAndSettings());
     }
